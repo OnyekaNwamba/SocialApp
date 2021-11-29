@@ -1,0 +1,63 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/socialappweb/node_modules/
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# production
+/socialappweb/build/
+
+# misc
+/socialappweb/.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+
+# Project exclude paths
+/socialappservice/lambdas/FriendRequestLambda/FriendRequestFunction/.gradle/
+/socialappservice/lambdas/FriendRequestLambda/FriendRequestFunction/build/
+/socialappservice/lambdas/FriendRequestLambda/FriendRequestFunction/build/classes/java/main/
+/socialappservice/lambdas/GetUserLambda/GetUserFunction/.gradle/
+/socialappservice/lambdas/GetUserLambda/GetUserFunction/build/
+/socialappservice/lambdas/GetUserLambda/GetUserFunction/build/classes/java/main/
+/socialappservice/lambdas/GetUserProfileLambda/GetUserProfileFunction/.gradle/
+/socialappservice/lambdas/GetUserProfileLambda/GetUserProfileFunction/build/
+/socialappservice/lambdas/GetUserProfileLambda/GetUserProfileFunction/build/classes/java/main/
+/socialappservice/lambdas/GetUserProfilesByUniversityLambda/GetUserProfilesByUniversityFunction/.gradle/
+/socialappservice/lambdas/GetUserProfilesByUniversityLambda/GetUserProfilesByUniversityFunction/build/
+/socialappservice/lambdas/GetUserProfilesByUniversityLambda/GetUserProfilesByUniversityFunction/build/classes/java/main/
+/socialappservice/lambdas/PutUserLambda/PutUserFunction/.gradle/
+/socialappservice/lambdas/PutUserLambda/PutUserFunction/build/
+/socialappservice/lambdas/PutUserLambda/PutUserFunction/build/classes/java/main/
+/socialappservice/lambdas/PutUserProfileLambda/PutUserProfileFunction/.gradle/
+/socialappservice/lambdas/PutUserProfileLambda/PutUserProfileFunction/build/
+/socialappservice/lambdas/PutUserProfileLambda/PutUserProfileFunction/build/classes/java/main/
+/socialappservice/lambdas/PutUserProfileLambdas/PutUserProfileFunction/.gradle/
+/socialappservice/lambdas/PutUserProfileLambdas/PutUserProfileFunction/build/
+/socialappservice/lambdas/PutUserProfileLambdas/PutUserProfileFunction/build/classes/java/main/
+/socialappservice/lambdas/GetUserLambda/out/
+/socialappservice/lambdas/GetUserLambda/.idea/
+/socialappservice/lambdas/GetUserProfileLambda/out/
+/socialappservice/lambdas/GetUserProfileLambda/.idea/
+/socialappservice/lambdas/GetUserProfilesByUniversityLambda/.idea/
+/socialappservice/lambdas/GetUserProfilesByUniversityLambda/out/
+/socialappservice/lambdas/PutUserLambda/.idea/
+/socialappservice/lambdas/PutUserLambda/out/
+/socialappservice/lambdas/GetUserProfilesByUniversityLambda/GetUserProfileLambda.iml
+/socialappservice/lambdas/GetUserProfileLambda/GetUserProfileLambda.iml
+/socialappservice/lambdas/PutUserLambda/PutUserLambda.iml
+/socialappservice/lambdas/PutUserProfileLambda/out/
+/socialappservice/lambdas/PutUserProfileLambda/.idea/
+/socialappservice/lambdas/PutUserProfileLambda/PutUserProfileLambda.iml
+/socialappservice/lambdas/PutUserProfileLambdas/out/
+/socialappservice/lambdas/PutUserProfileLambdas/.idea/
