@@ -6,7 +6,7 @@
     "isBase64Encoded": false,
     "queryStringParameters": {
       "foo": "bar",
-      "profile": "{\"user\":{\"id\":\"test-3\",\"firstName\":\"firstName\",\"lastName\":\"lastName\",\"email\":\"email\",\"password\":\"password\"},\"dob\":\"dob\",\"aboutMe\":null,\"likes\":null,\"university\":\"uni\",\"yearOfStudy\":null,\"phoneNumber\":null}"
+      "profile": "{\"userId\": \"test-3\",\"dob\":\"dob\",\"aboutMe\":null,\"likes\":null,\"university\":\"uni\",\"yearOfStudy\":null,\"phoneNumber\":null}"
     },
     "pathParameters": {
       "proxy": "/path/to/resource",

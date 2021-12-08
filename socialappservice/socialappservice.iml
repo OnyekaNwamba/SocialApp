@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="WEB_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lambdas/GetUserProfileLambda/GetUserProfileFunction/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/layers/java" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/lambdas/FriendRequestLambda/out" />
+      <excludeFolder url="file://$MODULE_DIR$/lambdas/FriendRequestLambda/.idea" />
+      <excludeFolder url="file://$MODULE_DIR$/lambdas/FriendRequestLambda/FriendRequestFunction/src/main/.aws-sam" />
+      <excludeFolder url="file://$MODULE_DIR$/lambdas/GetUserLambda/GetUserFunction/src/main/.aws-sam" />
+      <excludeFolder url="file://$MODULE_DIR$/lambdas/GetUserProfilesByUniversityLambda/GetUserProfilesByUniversityFunction/src/main/.aws-sam" />
+      <excludeFolder url="file://$MODULE_DIR$/lambdas/PutUserLambda/.aws-sam" />
+      <excludeFolder url="file://$MODULE_DIR$/lambdas/PutUserLambda/PutUserFunction/src/main/.aws-sam" />
+      <excludeFolder url="file://$MODULE_DIR$/lambdas/PutUserProfileLambda/PutUserProfileFunction/src/main/.aws-sam" />
+      <excludeFolder url="file://$MODULE_DIR$/lambdas/PutUserProfileLambdas/PutUserProfileFunction/src/main/.aws-sam" />
+    </content>
+    <orderEntry type="jdk" jdkName="corretto-11" jdkType="JavaSDK" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.20/lombok-1.18.20.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="library" name="Gradle: com.amazonaws:aws-java-sdk-dynamodb:1.12.62" level="project" />
+  </component>
+</module>

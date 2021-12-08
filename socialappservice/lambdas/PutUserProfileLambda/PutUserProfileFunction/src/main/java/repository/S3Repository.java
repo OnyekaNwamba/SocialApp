@@ -18,7 +18,8 @@ public class S3Repository {
   public void saveUserProfile(UserProfile profile) {
     try {
       String profileJson  = objectMapper.writeValueAsString(profile);
-      this.client.putObject(bucketName, profile.getUser().getId(), objectMapper.writeValueAsString(profile));
+//      this.client.putObject(bucketName, profile.getUser().getId(), objectMapper.writeValueAsString(profile));
+      this.client.putObject(bucketName, profile.getUserId(), objectMapper.writeValueAsString(profile));
     } catch (Exception e) {
       e.printStackTrace();
     }

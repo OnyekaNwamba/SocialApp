@@ -10,6 +10,7 @@ import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import model.UserProfile;
+import repository.DynamoDbRepository;
 import repository.S3Repository;
 
 /**
@@ -17,10 +18,10 @@ import repository.S3Repository;
  */
 public class App implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
 
-    S3Repository repository;
+    DynamoDbRepository dynamoDbRepository;
 
     public APIGatewayProxyResponseEvent handleRequest(final APIGatewayProxyRequestEvent input, final Context context) {
-        repository = new S3Repository();
+        dynamoDbRepository = new DynamoDbRepository();
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
         headers.put("X-Custom-Header", "application/json");
@@ -31,7 +32,7 @@ public class App implements RequestHandler<APIGatewayProxyRequestEvent, APIGatew
 
         try {
             final String userId = input.getPathParameters().get("userId");
-            UserProfile profile = repository.getUserProfile(userId);
+            UserProfile profile = dynamoDbRepository.getUserProfile(userId);
 
             String json = objectMapper.writeValueAsString(profile);
             return response

@@ -61,7 +61,9 @@ export class Api {
   putUser = async (user) => {
     return this.wrap(async () => {
       const request = this.url + "users?user=" + JSON.stringify(user);
-      return local.put(request);
+      console.log("RETURNED USER")
+      console.log(User.fromApi(local.put(request)))
+      return User.fromApi(local.put(request));
     }, "Failed to do put user");
   }
 
