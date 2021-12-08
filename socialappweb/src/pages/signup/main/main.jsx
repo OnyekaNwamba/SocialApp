@@ -38,7 +38,7 @@ export class SignUpMainPage extends React.Component {
       const authenticated = Authenticator.authenticate(user);
       if(authenticated) {
         //create empty user profile
-        const userResponse = await this.props.api.putUserProfile(new UserProfile(user));
+        const userResponse = await this.props.api.putUserProfile(new UserProfile(user.id));
         console.log(userResponse);
         this.props.history.push(`profile`);
       } else {

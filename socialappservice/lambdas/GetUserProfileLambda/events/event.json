@@ -10,7 +10,7 @@
     },
     "pathParameters": {
       "proxy": "/path/to/resource",
-      "userId": "c2b6585e-4b70-409a-a9ef-3a71243abf2d"
+      "userId": "c3c3baba-d2ee-47b9-a891-85d3875aa05a"
     },
     "stageVariables": {
       "baz": "qux"

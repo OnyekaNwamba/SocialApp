@@ -21,6 +21,7 @@ import { Card, CardContent, CardHeader, Property } from "../../../components/Car
 import { UserProfile } from "../../../models/UserProfile";
 import { Authenticator } from "../../../commons/authenticator";
 import { WithSubnavigation } from "../../../components/NavigationBar";
+import { User } from "../../../models/User";
 
 
 export class ProfileMainPage extends React.Component {
@@ -31,6 +32,7 @@ export class ProfileMainPage extends React.Component {
       isEditingProfile: false,
       isEditingAccount: false,
       userProfile: new UserProfile(),
+      user: new User(),
       isLoading: true,
       userLikes: [],
       currentLike: ""
@@ -42,8 +44,10 @@ export class ProfileMainPage extends React.Component {
       const user = JSON.parse(localStorage.getItem('user'));
       const response = await this.props.api.getUserProfile(user?.id);
       console.log(response);
+      console.log(User.fromApi(user));
       this.setState({
         userProfile: response.isError ?  new UserProfile() : response.success,
+        user: user,
         // userLikes: response.success.likes || [],
         isLoading: false
       });
@@ -58,13 +62,39 @@ export class ProfileMainPage extends React.Component {
     });
     const userProfile = this.state.userProfile;
     userProfile.likes = this.state.userLikes;
+    const updatedUser = new User(
+      this.state.user.id,
+      this.state.user.firstName,
+      this.state.user.lastName,
+      this.state.user.email,
+      this.state.user.password
+    );
     const response = await this.props.api.putUserProfile(userProfile);
+    const userResponse = await this.props.api.putUser(updatedUser);
+    if(!userResponse.isError) {
+      localStorage.setItem('user', JSON.stringify(this.state.user))
+    }
   }
 
-  onSaveAccountButtonClickHandler() {
+  async onSaveAccountButtonClickHandler() {
     this.setState({
       isEditingAccount: !this.state.isEditingAccount,
-    })
+    });
+
+    const updatedUser = new User(
+      this.state.user.id,
+      this.state.user.firstName,
+      this.state.user.lastName,
+      this.state.user.email,
+      this.state.user.password
+    );
+
+    const response = await this.props.api.putUser(updatedUser);
+
+    if(!response.isError) {
+      localStorage.setItem('user', JSON.stringify(this.state.user))
+    }
+
   }
 
   render() {
@@ -131,12 +161,12 @@ export class ProfileMainPage extends React.Component {
                     <Input
                       variant="filled"
                       isDisabled={!this.state.isEditingProfile}
-                      value={this.state.userProfile.user?.firstName || ""}
+                      value={this.state.user?.firstName || ""}
                       onChange={(e) => {
-                        const userProfile  = this.state.userProfile;
-                        userProfile.user.firstName = e.target.value;
+                        const user  = this.state.user;
+                        user.firstName = e.target.value;
                         this.setState({
-                          userProfile: userProfile
+                          user: user
                       })}}
                     />
                   }
@@ -146,13 +176,13 @@ export class ProfileMainPage extends React.Component {
                   value={
                     <Input
                       variant="filled"
-                      value={this.state.userProfile.user?.lastName || ""}
+                      value={this.state.user?.lastName || ""}
                       isDisabled={!this.state.isEditingProfile}
                       onChange={(e) => {
-                        const userProfile  = this.state.userProfile;
-                        userProfile.user.lastName = e.target.value;
+                        const user  = this.state.user;
+                        user.lastName = e.target.value;
                         this.setState({
-                          userProfile: userProfile
+                          user: user
                         })
                       }}
                     />
@@ -196,7 +226,7 @@ export class ProfileMainPage extends React.Component {
                 <Property
                   label="Things I like"
                   value={
-                    <FormControl id="email">
+                    <FormControl id="likes">
                       <VStack spacing={2} align={"left"}>
                         <Input
                           variant="filled"
@@ -316,13 +346,13 @@ export class ProfileMainPage extends React.Component {
                   value={
                     <Input
                       variant="filled"
-                      value={this.state.userProfile.user?.email || ""}
+                      value={this.state.user?.email || ""}
                       isDisabled={!this.state.isEditingAccount}
                       onChange={(e) => {
-                        const userProfile  = this.state.userProfile;
-                        userProfile.user.email = e.target.value;
+                        const user  = this.state.user;
+                        user.email = e.target.value;
                         this.setState({
-                          userProfile: userProfile
+                          user: user
                         })
                       }}
                     />

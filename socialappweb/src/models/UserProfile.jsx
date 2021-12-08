@@ -1,8 +1,9 @@
 import { User } from "./User";
 
 export class UserProfile {
-  constructor(user, dob, aboutMe, likes, university, course, yearOfStudy, phoneNumber, receivedFriendRequest, sentFriendRequests, friends) {
-    this.user = user;
+  constructor(userId, dob, aboutMe, likes, university, course, yearOfStudy, phoneNumber, receivedFriendRequest, sentFriendRequests, friends) {
+    // this.user = user;
+    this.userId = userId;
     this.dob = dob;
     this.aboutMe = aboutMe;
     this.likes = likes;
@@ -17,7 +18,8 @@ export class UserProfile {
 
   static fromApi(item) {
     return new UserProfile(
-      User.fromApi(item.user),
+      // User.fromApi(item.user),
+      item.userId,
       item.dob,
       item.aboutMe,
       item.likes,

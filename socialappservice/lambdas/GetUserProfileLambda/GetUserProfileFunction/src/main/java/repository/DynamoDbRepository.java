@@ -38,6 +38,10 @@ public class DynamoDbRepository {
     this.mapper.save(userProfile);
   }
 
+  public UserProfile getUserProfile(String userId) {
+    return this.mapper.load(UserProfile.class, userId);
+  }
+
   public User getUser(String email) {
     Map<String, AttributeValue> eav = new HashMap<>();
     eav.put(":v1", new AttributeValue().withS(email));
