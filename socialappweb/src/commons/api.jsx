@@ -86,6 +86,8 @@ export class Api {
     return this.wrap(async () => {
       const request = this.url + "profiles/" + userId;
       const response = await local.get(request);
+      console.log("RES")
+      console.log(response)
       return UserProfile.fromApi(response.data)
     }, "Failed to do get user profile");
   }
