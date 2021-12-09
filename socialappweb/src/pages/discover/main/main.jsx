@@ -41,7 +41,7 @@ export class DiscoverMainPage extends React.Component{
       user: isAuthenticated ? JSON.parse(localStorage.getItem('user')) : this.props.history.push(`login`),
       currentSlide: 0,
       isOpen: false,
-      isModalOpen: true
+      isModalOpen: false
     };
   }
 
@@ -63,16 +63,31 @@ export class DiscoverMainPage extends React.Component{
     this.isCompleteProfile(profileResponse.success);
 
     if(this.state.isProfileCompleted) {
-      const response = await this.props.api.getUserProfileByUniversity(user.university);
+      const profilesResponse = await this.props.api.getUserProfileByUniversity(user.university);
+      let usersAndProfiles = []
+
+      if(!profilesResponse.isError) {
+        usersAndProfiles = profilesResponse.success.map(async profile => {
+          const userResponse = await this.props.api.getUserById(profile.userId);
+          if(!userResponse.isError) {
+            return {user: userResponse.success, profile: profile}
+          }
+        });
+      }
+
+      console.log(user)
+
+      usersAndProfiles = await Promise.all(usersAndProfiles);
       this.setState({
         profile: !profileResponse.isError ? profileResponse.success : new UserProfile(),
-        users: response.isError ? [] : response.success.filter(item => item.user.id !== this.state.user.id),
+        users: usersAndProfiles.filter(item => item.user.id !== user.userId)
+        // users: usersAndProfiles
       })
     }
 
-    this.setState({
-      profile: !profileResponse.isError ? profileResponse.success : new UserProfile(),
-    })
+    // this.setState({
+    //   profile: !profileResponse.isError ? profileResponse.success : new UserProfile(),
+    // })
   }
 
   isCompleteProfile(profile) {
@@ -118,7 +133,7 @@ export class DiscoverMainPage extends React.Component{
   completeAccountModal() {
     return (
       <>
-        <Modal isOpen={this.state.isModalOpen} onClose={this.onModalClose.bind(this)}>
+        <Modal isOpen={true} onClose={this.onModalClose.bind(this)}>
           <ModalOverlay />
           <ModalContent>
             <ModalHeader>Complete your profile</ModalHeader>
@@ -145,9 +160,9 @@ export class DiscoverMainPage extends React.Component{
 
   render() {
     return(
-      <Skeleton>
+      <Skeleton isLoaded={this.state.users!==null}>
         {
-          this.state.isProfileCompleted ?
+          !this.state.isProfileCompleted ?
             this.completeAccountModal() :
             <Box>
               <WithSubnavigation history={this.props.history}/>
@@ -174,6 +189,8 @@ export class DiscoverMainPage extends React.Component{
                 </GridItem>
                 <GridItem colSpan={4} py={70}>
                   <VStack spacing={5}>
+                    <Heading as="h1" size="3xl">SocialApp</Heading>
+                    <Box/>
                     <Carousel slides={this.state.users || []} currentSlide={this.state.currentSlide} isOpen={this.state.isOpen}/>
                     <Grid templateColumns="repeat(5, 1fr)" gap={20}>
                       <Box w={100}/>

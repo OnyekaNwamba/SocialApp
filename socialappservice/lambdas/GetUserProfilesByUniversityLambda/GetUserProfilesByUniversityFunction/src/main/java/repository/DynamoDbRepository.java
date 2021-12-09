@@ -10,11 +10,10 @@ import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.ScanRequest;
 import com.amazonaws.services.dynamodbv2.model.ScanResult;
 import model.User;
+import model.UserProfile;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class DynamoDbRepository {
 
@@ -33,12 +32,16 @@ public class DynamoDbRepository {
     this.mapper.save(user);
   }
 
-  public User getUser(String email) {
+  public void saveUserProfile(UserProfile userProfile) {
+    this.mapper.save(userProfile);
+  }
+
+  public User getUser(String id) {
     Map<String, AttributeValue> eav = new HashMap<>();
-    eav.put(":v1", new AttributeValue().withS(email));
+    eav.put(":v1", new AttributeValue().withS(id));
 
     DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
-      .withFilterExpression("email = :v1")
+      .withFilterExpression("user_id = :v1")
       .withExpressionAttributeValues(eav);
     List<User> result = mapper.scan(User.class, scanExpression);
     if(result.isEmpty()) {
@@ -47,17 +50,38 @@ public class DynamoDbRepository {
     return result.get(0);
   }
 
-  public User getUserById(String id) {
+  public ArrayList<UserProfile> getUserProfileByUniversity(String university) {
     Map<String, AttributeValue> eav = new HashMap<>();
-    eav.put(":v1", new AttributeValue().withS(id));
+    eav.put(":v1", new AttributeValue().withS(university));
 
     DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
-      .withFilterExpression("id = :v1")
+      .withFilterExpression("university = :v1")
       .withExpressionAttributeValues(eav);
-    List<User> result = mapper.scan(User.class, scanExpression);
+    ArrayList<UserProfile> result = new ArrayList<>(mapper.scan(UserProfile.class, scanExpression));
     if(result.isEmpty()) {
-      return null;
+      return new ArrayList<>();
     }
-    return result.get(0);
+    return result;
+  }
+
+  public Map<User, UserProfile> getUserAndProfileByUniversity(String university) {
+    Map<User, UserProfile> result = new HashMap<>();
+    Map<String, AttributeValue> eav = new HashMap<>();
+    eav.put(":v1", new AttributeValue().withS(university));
+
+    DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
+      .withFilterExpression("university = :v1")
+      .withExpressionAttributeValues(eav);
+    List<UserProfile> resultProfiles = mapper.scan(UserProfile.class, scanExpression);
+    if(!resultProfiles.isEmpty()) {
+      for(UserProfile userProfile : resultProfiles) {
+        User user = this.getUser(userProfile.getUserId());
+        if(user != null) {
+          result.put(user, userProfile);
+        }
+      }
+    }
+
+    return result;
   }
 }
