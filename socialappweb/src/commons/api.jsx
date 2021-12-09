@@ -61,7 +61,6 @@ export class Api {
   putUser = async (user) => {
     return this.wrap(async () => {
       const request = this.url + "users?user=" + JSON.stringify(user);
-      console.log("RETURNED USER")
       console.log(User.fromApi(local.put(request)))
       return User.fromApi(local.put(request));
     }, "Failed to do put user");
@@ -98,6 +97,16 @@ export class Api {
       const response = await local.get(request);
       return response.data.map(s => UserProfile.fromApi(s))
     }, "Failed to do get user profiles by uni");
+  }
+
+  getUserById = async (id) => {
+    return this.wrap(async () => {
+      const request = this.url + "user?userId=" + id;
+      const response = await local.get(request);
+      console.log("HUH")
+      console.log(response)
+      return User.fromApi(response.data)
+    }, "Failed to do get user profiles by id " + id);
   }
 }
 

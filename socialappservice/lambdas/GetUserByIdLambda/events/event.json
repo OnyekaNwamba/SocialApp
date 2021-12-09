@@ -5,14 +5,11 @@
     "httpMethod": "POST",
     "isBase64Encoded": false,
     "queryStringParameters": {
-      "foo": "bar",
-      "university": "UCL",
-      "profile": "{\"user\":{\"id\":\"test-3\",\"firstName\":\"firstName\",\"lastName\":\"lastName\",\"email\":\"email\",\"password\":\"password\"},\"dob\":\"dob\",\"aboutMe\":null,\"likes\":null,\"university\":\"uni\",\"yearOfStudy\":null,\"phoneNumber\":null}"
+      "userId": "c2b6585e-4b70-409a-a9ef-3a71243abf2i"
     },
     "pathParameters": {
       "proxy": "/path/to/resource",
-      "userId": "test-1",
-      "university": "Queen Mary, University of London"
+      "email": "onynwamba@gmail.com"
     },
     "stageVariables": {
       "baz": "qux"
