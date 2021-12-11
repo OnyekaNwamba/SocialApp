@@ -6,15 +6,21 @@
       <sourceFolder url="file://$MODULE_DIR$/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/lambdas/" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/layers/java" isTestSource="false" />
-      <excludeFolder url="file://$MODULE_DIR$/lambdas/FriendRequestLambda/out" />
-      <excludeFolder url="file://$MODULE_DIR$/lambdas/FriendRequestLambda/.idea" />
-      <excludeFolder url="file://$MODULE_DIR$/lambdas/FriendRequestLambda/FriendRequestFunction/src/main/.aws-sam" />
       <excludeFolder url="file://$MODULE_DIR$/lambdas/GetUserLambda/GetUserFunction/src/main/.aws-sam" />
       <excludeFolder url="file://$MODULE_DIR$/lambdas/GetUserProfilesByUniversityLambda/GetUserProfilesByUniversityFunction/src/main/.aws-sam" />
       <excludeFolder url="file://$MODULE_DIR$/lambdas/PutUserLambda/.aws-sam" />
       <excludeFolder url="file://$MODULE_DIR$/lambdas/PutUserLambda/PutUserFunction/src/main/.aws-sam" />
       <excludeFolder url="file://$MODULE_DIR$/lambdas/PutUserProfileLambda/PutUserProfileFunction/src/main/.aws-sam" />
       <excludeFolder url="file://$MODULE_DIR$/lambdas/PutUserProfileLambdas/PutUserProfileFunction/src/main/.aws-sam" />
+      <excludeFolder url="file://$MODULE_DIR$/lambdas/SendFriendRequestLambda/out" />
+      <excludeFolder url="file://$MODULE_DIR$/lambdas/SendFriendRequestLambda/.idea" />
+      <excludeFolder url="file://$MODULE_DIR$/lambdas/SendFriendRequestLambda/SendFriendRequestFunction/src/main/.aws-sam" />
+      <excludeFolder url="file://$MODULE_DIR$/lambdas/GetFriendRequestLambda/.idea" />
+      <excludeFolder url="file://$MODULE_DIR$/lambdas/GetFriendRequestLambda/out/production/PutUserLambda" />
+      <excludeFolder url="file://$MODULE_DIR$/lambdas/GetFriendRequestLambda/out/production" />
+      <excludeFolder url="file://$MODULE_DIR$/lambdas/GetFriendRequestLambda/GetFriendRequestFunction/src/main/.gradle" />
+      <excludeFolder url="file://$MODULE_DIR$/lambdas/GetFriendRequestLambda/GetFriendRequestFunction/.gradle" />
+      <excludeFolder url="file://$MODULE_DIR$/lambdas/GetFriendRequestLambda/out" />
     </content>
     <orderEntry type="jdk" jdkName="corretto-11" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
