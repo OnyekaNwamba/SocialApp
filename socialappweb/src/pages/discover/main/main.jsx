@@ -4,13 +4,10 @@ import {
   Box,
   Grid,
   GridItem,
-  Link,
   IconButton,
   VStack,
-  Image,
   Heading,
   Button,
-  Slide,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -22,13 +19,16 @@ import {
   CircularProgress,
   CircularProgressLabel,
   SimpleGrid,
-  Skeleton
+  Skeleton,
+  Stack
 } from '@chakra-ui/react';
 import { ArrowDownIcon } from '@chakra-ui/icons'
 import { WithSubnavigation } from "../../../components/NavigationBar";
 import { Authenticator } from "../../../commons/authenticator";
 import { Carousel } from "../../../components/Carousel";
 import { UserProfile } from "../../../models/UserProfile";
+import { faRedo, faTimes, faHeart, faThumbsUp, faThumbsDown  } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export class DiscoverMainPage extends React.Component{
   constructor(props) {
@@ -41,7 +41,8 @@ export class DiscoverMainPage extends React.Component{
       user: isAuthenticated ? JSON.parse(localStorage.getItem('user')) : this.props.history.push(`login`),
       currentSlide: 0,
       isOpen: false,
-      isModalOpen: false
+      isModalOpen: false,
+      isFlipped: false
     };
   }
 
@@ -80,14 +81,9 @@ export class DiscoverMainPage extends React.Component{
       usersAndProfiles = await Promise.all(usersAndProfiles);
       this.setState({
         profile: !profileResponse.isError ? profileResponse.success : new UserProfile(),
-        users: usersAndProfiles.filter(item => item.user.id !== user.userId)
-        // users: usersAndProfiles
+        users: usersAndProfiles.filter(item => item.user.id !== user.userId),
       })
     }
-
-    // this.setState({
-    //   profile: !profileResponse.isError ? profileResponse.success : new UserProfile(),
-    // })
   }
 
   isCompleteProfile(profile) {
@@ -128,6 +124,11 @@ export class DiscoverMainPage extends React.Component{
     this.setState({
       isModalOpen: false
     })
+  }
+
+  handleClick(e) {
+    e.preventDefault();
+    this.setState(prevState => ({ isFlipped: !prevState.isFlipped }));
   }
 
   completeAccountModal() {
@@ -178,34 +179,69 @@ export class DiscoverMainPage extends React.Component{
                   bg={'white'}
                   minH={'100vh'}
                 >
-                  {/*<SegmentedControl*/}
-                  {/*  name="exampleInput"*/}
-                  {/*  options={[*/}
-                  {/*    { label: "One", value: "one" },*/}
-                  {/*    { label: "Two", value: "two", default: true },*/}
-                  {/*  ]}*/}
-                  {/*  style={{ width: 200, height: 30, color: 'rgb(0, 188, 212)', borderRadius: 50 }} // match default material-ui primary teal*/}
-                  {/*/>*/}
                 </GridItem>
                 <GridItem colSpan={4} py={70}>
                   <VStack spacing={5}>
-                    <Heading as="h1" size="3xl">SocialApp</Heading>
+                    <Heading as="h2" size="2xl">SocialApp</Heading>
                     <Box/>
-                    <Carousel slides={this.state.users || []} currentSlide={this.state.currentSlide} isOpen={this.state.isOpen}/>
-                    <Grid templateColumns="repeat(5, 1fr)" gap={20}>
+                    <Carousel
+                      slides={this.state.users || []}
+                      currentSlide={this.state.currentSlide}
+                      isOpen={this.state.isOpen}
+                      isFlipped={this.state.isFlipped}
+                      onClickHandler={(e) => this.handleClick(e)}
+                    />
+                    <Box />
+                    <Grid templateColumns="repeat(5, 1fr)" gap={30}>
                       <Box w={100}/>
                       <Box w={100}/>
+                      <IconButton
+                        size='lg'
+                        height="4rem"
+                        width="4rem"
+                        onClick={(e) => this.handleClick(e)}
+                        icon={
+                          <>
+                            <FontAwesomeIcon icon={faRedo} size="1x"/>
+                          </>
+                        }
+                        variant='solid'
+                        borderRadius={"80%"}
+                      />
                       <Box w={100}/>
                       <Box w={100}/>
-                      <Box w={100}>
-                        <Button
-                          variant="solid"
-                          borderRadius="full"
-                          onClick={() => { this.setState({currentSlide: this.state.currentSlide +=1}) }}
-                        >
-                          Send friend request ❤️
-                        </Button>
-                      </Box>
+                    </Grid>
+                    <Grid templateColumns="repeat(5, 1fr)" gap={30}>
+                      <Box w={100}/>
+                      <Box w={100}/>
+                      <Stack direction='row' spacing={6}>
+                        <IconButton
+                          size='lg'
+                          height="4rem"
+                          width="4rem"
+                          icon={
+                            <>
+                              <FontAwesomeIcon icon={faThumbsDown} size="1x"/>
+                            </>
+                          }
+                          variant='solid'
+                          borderRadius={"80%"}
+                        />
+                        <IconButton
+                          size='lg'
+                          height="4rem"
+                          width="4rem"
+                          icon={
+                            <>
+                              <FontAwesomeIcon icon={faThumbsUp} size="1x"/>
+                            </>
+                          }
+                          variant='solid'
+                          borderRadius={"80%"}
+                        />
+                      </Stack>
+                      <Box w={100}/>
+                      <Box w={100}/>
                     </Grid>
                   </VStack>
                 </GridItem>
