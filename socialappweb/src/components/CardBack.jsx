@@ -5,21 +5,17 @@ import { faQuoteLeft, faQuoteRight } from '@fortawesome/free-solid-svg-icons'
 
 
 
-export const CardFront = ({sid, userProfile }) => {
+export const CardBack = ({sid, userProfile }) => {
 
-  const ordinal_suffix_of = (i) => {
-    let j = i % 10,
-      k = i % 100;
-    if (j === 1 && k !== 11) {
-      return i + "st";
-    }
-    if (j === 2 && k !== 12) {
-      return i + "nd";
-    }
-    if (j === 3 && k !== 13) {
-      return i + "rd";
-    }
-    return i + "th";
+  const english_ordinal_rules = new Intl.PluralRules("en", {
+    type: "ordinal"
+  });
+
+  const suffixes = {
+    one: "st",
+    two: "nd",
+    few: "rd",
+    other: "th"
   }
 
   return <Box key={`slide-${sid}`} boxSize="full" shadow="md" flex="none">
@@ -45,32 +41,33 @@ export const CardFront = ({sid, userProfile }) => {
         </Box>
       </GridItem>
       <GridItem colSpan={1}>
-        <Box minH={"25%"} />
+        <Box minH={"10%"} />
         <Box minH={"60%"}>
-          <VStack spacing={3} align="left" paddingLeft="3rem" paddingRight="3rem">
-            <Heading as="h1" size="4xl" color={"white"} align="left">
-              {userProfile.user.firstName} {userProfile.user.lastName}
+          <VStack spacing={2}>
+            <Heading as="h1" size="3xl" color={"white"}>
             </Heading>
             <Box />
-            <Heading as="h1" size="2xl" color={"white"}>
-              23
-            </Heading>
             <Box />
-            <Heading as="h2" size="xl" color={"white"}>
-              {userProfile.profile.university || "Queen Mary, University of London"}
-            </Heading>
             <Box />
+            <Box />
+            <Box />
+            <Flex align={"center"} justify={"center"}>
+              <FontAwesomeIcon icon={faQuoteLeft} color={"white"} size={"lg"} />
+            </Flex>
             <Box />
             <Flex>
-              <Heading as="h1" size="lg" color={"white"}>
-                {ordinal_suffix_of(userProfile.profile.yearOfStudy)} year
+              <Heading as="h4" size="md" color={"white"} px={10}>
+                {userProfile.profile.aboutMe}
               </Heading>
+            </Flex>
+            <Box />
+            <Flex align={"center"} justify={"center"}>
+              <FontAwesomeIcon icon={faQuoteRight} color={"white"} size={"lg"} />
             </Flex>
             <Box />
             <Box />
             <Box />
-            <Box />
-            <Box />
+            <Heading as="h4" size="xs" color={"white"}> Likes </Heading>
             <Box />
           </VStack>
           <Box minH={"20%"} />
