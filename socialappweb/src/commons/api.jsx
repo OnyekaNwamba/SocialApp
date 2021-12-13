@@ -1,6 +1,7 @@
 import axios from 'axios'
 import {User} from "../models/User";
 import {UserProfile} from "../models/UserProfile";
+import {FriendRequest} from "../models/FriendRequest";
 
 const local = axios.create();
 
@@ -107,6 +108,16 @@ export class Api {
       console.log(response)
       return User.fromApi(response.data)
     }, "Failed to do get user profiles by id " + id);
+  }
+
+  getAllFriendRequests = async (userId) => {
+    return this.wrap(async () => {
+      const request = this.url + "friend-requests/" + userId;
+      const response = await local.get(request);
+      console.log("HUH")
+      console.log(response)
+      return response.data.map(s => FriendRequest.fromApi(s))
+    }, "Failed to do get friend requests for user " + userId);
   }
 }
 

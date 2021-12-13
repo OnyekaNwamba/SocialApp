@@ -29,8 +29,9 @@ import { Carousel } from "../../../components/Carousel";
 import { UserProfile } from "../../../models/UserProfile";
 import { faRedo, faTimes, faHeart, faThumbsUp, faThumbsDown  } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { SideBar } from "./SideBar";
 
-export class DiscoverMainPage extends React.Component{
+export class DiscoverMainPage extends React.Component {
   constructor(props) {
     super(props);
 
@@ -75,8 +76,6 @@ export class DiscoverMainPage extends React.Component{
           }
         });
       }
-
-      console.log(user)
 
       usersAndProfiles = await Promise.all(usersAndProfiles);
       this.setState({
@@ -163,8 +162,8 @@ export class DiscoverMainPage extends React.Component{
     return(
       <Skeleton isLoaded={this.state.users!==null}>
         {
-          !this.state.isProfileCompleted ?
-            this.completeAccountModal() :
+          // !this.state.isProfileCompleted ?
+          //   this.completeAccountModal() :
             <Box>
               <WithSubnavigation history={this.props.history}/>
               <Grid
@@ -179,6 +178,7 @@ export class DiscoverMainPage extends React.Component{
                   bg={'white'}
                   minH={'100vh'}
                 >
+                  <SideBar {...this.props} />
                 </GridItem>
                 <GridItem colSpan={4} py={70}>
                   <VStack spacing={5}>
