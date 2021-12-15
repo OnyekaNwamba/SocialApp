@@ -6,15 +6,20 @@ import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import lombok.SneakyThrows;
 import model.FriendRequest;
 import repository.DynamoDbRepository;
 
 public class GetFriendRequest implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
   DynamoDbRepository repository;
 
+  @SneakyThrows
   public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent input, Context context) {
     this.repository = new DynamoDbRepository();
 
@@ -27,16 +32,30 @@ public class GetFriendRequest implements RequestHandler<APIGatewayProxyRequestEv
       .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
       .findAndRegisterModules();
 
+    String result = "";
     try {
-      String to = input.getPathParameters().get("to");
-      List<FriendRequest> friendRequestList = this.repository.getAllFriendRequests(to);
+      String to = input.getQueryStringParameters().get("to");
+      String from = input.getQueryStringParameters().get("from");
+
+      if(from != null && to != null) {
+        FriendRequest friendRequest = this.repository.getMatchingFriendRequest(to, from);
+        result = objectMapper.writeValueAsString(friendRequest);
+      } else if(to != null) {
+        List<FriendRequest> friendRequestList = this.repository.getAllFriendRequests(to);
+        result = objectMapper.writeValueAsString(friendRequestList);
+      } else if(from != null) {
+        List<FriendRequest> friendRequestList = this.repository.getAllSentFriendRequests(from);
+        result = objectMapper.writeValueAsString(friendRequestList);
+      }
 
       return response
         .withStatusCode(200)
-        .withBody(objectMapper.writeValueAsString(friendRequestList));
+        .withBody(result);
     } catch (Exception e) {
       e.printStackTrace();
-      return response.withBody(e.getMessage()).withStatusCode(500);
+      return response
+        .withBody(objectMapper.writeValueAsString("ERROR: " + e.getMessage()))
+        .withStatusCode(500);
     }
   }
 }

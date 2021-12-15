@@ -1,7 +1,7 @@
 import { User } from "./User";
 
 export class UserProfile {
-  constructor(userId, dob, aboutMe, likes, university, course, yearOfStudy, phoneNumber, receivedFriendRequest, sentFriendRequests, friends) {
+  constructor(userId, dob, aboutMe, likes, university, course, yearOfStudy, phoneNumber, profilePicture, friends) {
     // this.user = user;
     this.userId = userId;
     this.dob = dob;
@@ -11,8 +11,7 @@ export class UserProfile {
     this.course = course;
     this.yearOfStudy = yearOfStudy;
     this.phoneNumber = phoneNumber;
-    this.receivedFriendRequest = receivedFriendRequest;
-    this.sentFriendRequests = sentFriendRequests;
+    this.profilePicture = profilePicture;
     this.friends = friends
   }
 
@@ -27,8 +26,7 @@ export class UserProfile {
       item.course,
       item.yearOfStudy,
       item.phoneNumber,
-      item.receivedFriendRequest,
-      item.sentFriendRequests,
+      item.profilePicture,
       item.friends
     )
   }

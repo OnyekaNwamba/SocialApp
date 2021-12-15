@@ -5,11 +5,12 @@
     "httpMethod": "POST",
     "isBase64Encoded": false,
     "queryStringParameters": {
-      "userId": "c2b6585e-4b70-409a-a9ef-3a71243abf2i"
+      "userId": "c2b6585e-4b70-409a-a9ef-3a71243abf2i",
+      "from": "c2b6585e-4b70-409a-a9ef-3a71243abf2ixo"
     },
     "pathParameters": {
       "proxy": "/path/to/resource",
-      "to": "c2b6585e-4b70-409a-a9ef-3a71243abf2d"
+      "to": "NULL"
     },
     "stageVariables": {
       "baz": "qux"

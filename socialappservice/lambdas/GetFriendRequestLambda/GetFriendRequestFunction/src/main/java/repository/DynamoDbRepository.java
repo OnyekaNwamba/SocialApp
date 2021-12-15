@@ -35,4 +35,19 @@ public class DynamoDbRepository {
     return result.isEmpty() ? new ArrayList<>() : result;
   }
 
+  public FriendRequest getMatchingFriendRequest(String to, String from) {
+    return this.mapper.load(FriendRequest.class, to, from);
+  }
+
+  public ArrayList<FriendRequest> getAllSentFriendRequests(String from) {
+    Map<String, AttributeValue> eav = new HashMap<>();
+    eav.put(":v1", new AttributeValue().withS(from));
+    DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
+      .withFilterExpression("#from_user = :v1")
+      .withExpressionAttributeValues(eav)
+      .addExpressionAttributeNamesEntry("#from_user", "from");
+    ArrayList<FriendRequest> result = new ArrayList<>(this.mapper.scan(FriendRequest.class, scanExpression));
+    return result.isEmpty() ? new ArrayList<>() : result;
+  }
+
 }

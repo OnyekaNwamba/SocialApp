@@ -78,7 +78,8 @@ export class Api {
   putUserProfile = async (profile) => {
     return this.wrap(async () => {
       const request = this.url + "profiles?profile=" + JSON.stringify(profile);
-      return local.put(request);
+      const response = local.put(request);
+      return UserProfile.fromApi(response.data);
     }, "Failed to do put profile");
   }
 
@@ -104,8 +105,6 @@ export class Api {
     return this.wrap(async () => {
       const request = this.url + "user?userId=" + id;
       const response = await local.get(request);
-      console.log("HUH")
-      console.log(response)
       return User.fromApi(response.data)
     }, "Failed to do get user profiles by id " + id);
   }
@@ -114,10 +113,24 @@ export class Api {
     return this.wrap(async () => {
       const request = this.url + "friend-requests/" + userId;
       const response = await local.get(request);
-      console.log("HUH")
-      console.log(response)
       return response.data.map(s => FriendRequest.fromApi(s))
     }, "Failed to do get friend requests for user " + userId);
+  }
+
+  sendFriendRequest = async (from, to) => {
+    return this.wrap(async () => {
+      const request = this.url + "friend-requests?from=" + from + "&to=" + to;
+      const response = await local.put(request);
+      return FriendRequest.fromApi(response.data);
+    }, "Failed to do send friend request");
+  }
+
+  getAllFriendRequestsFromUser = async (from) => {
+    return this.wrap(async () => {
+      const request = this.url + "friend-requests/NULL" + "?from=" + from;
+      const response = await local.get(request);
+      return response.data.map(s => FriendRequest.fromApi(s))
+    }, "Failed to do get matching friend requests to from " + from);
   }
 }
 

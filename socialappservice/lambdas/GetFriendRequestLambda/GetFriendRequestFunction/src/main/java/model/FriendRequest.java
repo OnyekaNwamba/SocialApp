@@ -25,7 +25,7 @@ public class FriendRequest {
   @NonNull
   @DynamoDBAttribute(attributeName = "date_time")
   @DynamoDBTypeConverted(converter = StringInstantConverter.class)
-  String date_time;
+  Instant date_time;
 
   public FriendRequest() {}
 }

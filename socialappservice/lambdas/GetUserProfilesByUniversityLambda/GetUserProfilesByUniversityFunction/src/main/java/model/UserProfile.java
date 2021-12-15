@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
+import model.User;
 
 import java.util.List;
 
@@ -41,11 +42,8 @@ public class UserProfile {
   @DynamoDBAttribute(attributeName = "phoneNumber")
   String phoneNumber;
 
-  @DynamoDBAttribute(attributeName = "receivedFriendRequest")
-  List<User> receivedFriendRequest;
-
-  @DynamoDBAttribute(attributeName = "sentFriendRequests")
-  List<User> sentFriendRequests;
+  @DynamoDBAttribute(attributeName = "profile_picture")
+  String profilePicture;
 
   @DynamoDBAttribute(attributeName = "friends")
   List<User> friends;

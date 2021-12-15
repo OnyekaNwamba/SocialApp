@@ -16,7 +16,7 @@ import repository.S3Repository;
 /**
  * Handler for requests to Lambda activity.
  */
-public class App implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
+public class PutUserProfile implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
 
     S3Repository repository;
     DynamoDbRepository dynamoDbRepository;
