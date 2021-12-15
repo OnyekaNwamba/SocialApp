@@ -20,7 +20,8 @@ import {
   CircularProgressLabel,
   SimpleGrid,
   Skeleton,
-  Stack
+  Stack,
+  useToast
 } from '@chakra-ui/react';
 import { ArrowDownIcon } from '@chakra-ui/icons'
 import { WithSubnavigation } from "../../../components/NavigationBar";
@@ -30,6 +31,8 @@ import { UserProfile } from "../../../models/UserProfile";
 import { faRedo, faTimes, faHeart, faThumbsUp, faThumbsDown  } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { SideBar } from "./SideBar";
+import { FriendRequest } from "../../../models/FriendRequest";
+import { Toast } from "../../../components/Toast";
 
 export class DiscoverMainPage extends React.Component {
   constructor(props) {
@@ -43,7 +46,8 @@ export class DiscoverMainPage extends React.Component {
       currentSlide: 0,
       isOpen: false,
       isModalOpen: false,
-      isFlipped: false
+      isFlipped: false,
+      isLoaded: false
     };
   }
 
@@ -78,11 +82,29 @@ export class DiscoverMainPage extends React.Component {
       }
 
       usersAndProfiles = await Promise.all(usersAndProfiles);
+
+      const friendRequestsResponse = await this.props.api.getAllFriendRequestsFromUser(this.state.user.id);
+      let friendRequestsFromMe = []
+
+      if(friendRequestsResponse.isError) {
+        console.error(friendRequestsResponse.error)
+      } else {
+        friendRequestsFromMe = friendRequestsResponse.success.map(rq => rq.to);
+      }
+
+      usersAndProfiles = usersAndProfiles
+        .filter(item => item.user.id !== user.userId)
+        .filter(item => !friendRequestsFromMe.includes(item.user.id))
+
       this.setState({
         profile: !profileResponse.isError ? profileResponse.success : new UserProfile(),
-        users: usersAndProfiles.filter(item => item.user.id !== user.userId),
-      })
+        users: usersAndProfiles,
+        friendRequestsFromMe: friendRequestsFromMe,
+        isLoading: true
+      });
     }
+
+    console.log(this.state.isLoading)
   }
 
   isCompleteProfile(profile) {
@@ -158,12 +180,29 @@ export class DiscoverMainPage extends React.Component {
     )
   }
 
+  sendFriendRequest = async () => {
+
+    const user = this.state.users[this.state.currentSlide].profile;
+
+    const response = await this.props.api.sendFriendRequest(user.userId, this.state.user.id);
+
+    if(response.isError) {
+      console.log(response.error)
+    } else {
+      this.setState({
+        currentSlide: this.state.currentSlide + 1
+      })
+
+      return <Toast
+        title={"Friend request sent ❤️!"}
+        description={"You've sent a friend request to " + this.state.users[this.state.currentSlide].user.firstName}
+      />
+    }
+  }
+
   render() {
     return(
-      <Skeleton isLoaded={this.state.users!==null}>
-        {
-          // !this.state.isProfileCompleted ?
-          //   this.completeAccountModal() :
+      <Skeleton isLoaded={this.state.isLoading}>
             <Box>
               <WithSubnavigation history={this.props.history}/>
               <Grid
@@ -238,6 +277,7 @@ export class DiscoverMainPage extends React.Component {
                           }
                           variant='solid'
                           borderRadius={"80%"}
+                          onClick={() => this.sendFriendRequest()}
                         />
                       </Stack>
                       <Box w={100}/>
@@ -247,7 +287,6 @@ export class DiscoverMainPage extends React.Component {
                 </GridItem>
               </Grid>
             </Box>
-        }
       </Skeleton>
     )
   }

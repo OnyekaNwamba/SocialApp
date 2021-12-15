@@ -39,6 +39,7 @@ export const Carousel = ({ slides, currentSlide, isOpen, onClickHandler, isFlipp
     transition: "all .5s",
     ml: `-${currentSlide * 100}%`,
   };
+  console.log(currentSlide)
 
   return (
     <Box
@@ -54,10 +55,12 @@ export const Carousel = ({ slides, currentSlide, isOpen, onClickHandler, isFlipp
       <Flex overflow="hidden" pos="relative">
         <Flex h="full" w="full" {...carouselStyle}>
           {slides.map((userProfile, sid) => (
-            <ReactCardFlip isFlipped={isFlipped} flipDirection="vertical">
-              <CardFront sid={sid} userProfile={userProfile} onClick={onClickHandler}/>
-              <CardBack sid={sid} userProfile={userProfile} onClick={onClickHandler}/>
-            </ReactCardFlip>
+            <Box key={`slide-${sid}`} boxSize="full" shadow="md" flex="none">
+              <ReactCardFlip isFlipped={isFlipped} flipDirection="vertical">
+                <CardFront userProfile={userProfile} onClick={onClickHandler}/>
+                <CardBack userProfile={userProfile} onClick={onClickHandler}/>
+              </ReactCardFlip>
+            </Box>
           ))}
         </Flex>
       </Flex>

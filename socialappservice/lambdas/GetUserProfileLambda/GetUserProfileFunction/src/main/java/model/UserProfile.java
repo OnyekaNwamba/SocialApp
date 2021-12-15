@@ -9,27 +9,6 @@ import lombok.Setter;
 
 import java.util.List;
 
-//@Getter
-//@Setter
-//public class UserProfile {
-//
-//  User user;
-//
-//  String dob;
-//
-//  String aboutMe;
-//
-//  List<String> likes;
-//
-//  String university;
-//
-//  String course;
-//
-//  String yearOfStudy;
-//
-//  String phoneNumber;
-//}
-
 @Getter
 @Setter
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
@@ -38,9 +17,6 @@ public class UserProfile {
 
   @DynamoDBHashKey(attributeName = "user_id")
   String userId;
-
-//  @DynamoDBAttribute(attributeName = "user")
-//  User user;
 
   @DynamoDBAttribute(attributeName = "dob")
   String dob;
@@ -63,11 +39,8 @@ public class UserProfile {
   @DynamoDBAttribute(attributeName = "phoneNumber")
   String phoneNumber;
 
-  @DynamoDBAttribute(attributeName = "receivedFriendRequest")
-  List<User> receivedFriendRequest;
-
-  @DynamoDBAttribute(attributeName = "sentFriendRequests")
-  List<User> sentFriendRequests;
+  @DynamoDBAttribute(attributeName = "profile_picture")
+  String profilePicture;
 
   @DynamoDBAttribute(attributeName = "friends")
   List<User> friends;

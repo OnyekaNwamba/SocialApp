@@ -14,17 +14,18 @@ export class SideBar extends React.Component {
   }
 
   async componentDidMount() {
-    console.log(this.state)
-    const response = await this.props.api.getAllFriendRequests(this.state.user.id);
-    let friendRequests = [];
-
-    if(response.isError) {
-      console.log(response)
-    } else {
-      friendRequests = response.success;
-      console.log("RE")
-      console.log(friendRequests)
-    }
+    // console.log("STATE")
+    // console.log(this.state)
+    // const response = await this.props.api.getAllFriendRequests(this.state.user.id);
+    // let friendRequests = [];
+    //
+    // if(response.isError) {
+    //   console.log(response)
+    // } else {
+    //   friendRequests = response.success;
+    //   console.log("RE")
+    //   console.log(friendRequests)
+    // }
   }
 
   render() {

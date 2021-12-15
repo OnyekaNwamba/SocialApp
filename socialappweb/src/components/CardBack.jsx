@@ -33,9 +33,13 @@ export const CardBack = ({sid, userProfile }) => {
             bgSize="cover"
           >
             <Image
-              src='https://waspper.com/wp-content/uploads/2020/06/750x750.png'
+              src={userProfile.profile.profilePicture}
+              // src='https://waspper.com/wp-content/uploads/2020/06/750x750.png'
               alt="Segun Adebayo"
-              h={"100%"}
+              // h={"623"}
+              // w={"623"}
+              h={"610"}
+              w={"610"}
             />
           </Box>
         </Box>

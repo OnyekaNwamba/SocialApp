@@ -43,10 +43,11 @@ export class ProfileMainPage extends React.Component {
     if(Authenticator.isAuthenticated()) {
       const user = JSON.parse(localStorage.getItem('user'));
       const response = await this.props.api.getUserProfile(user?.id);
+      console.log("PRF")
       console.log(response);
       console.log(User.fromApi(user));
       this.setState({
-        userProfile: response.isError ?  new UserProfile() : response.success,
+        userProfile: response.isError ?  new UserProfile(user.id) : response.success,
         user: user,
         // userLikes: response.success.likes || [],
         isLoading: false
@@ -96,6 +97,28 @@ export class ProfileMainPage extends React.Component {
     }
 
   }
+
+  imageHandler = (e) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (reader.readyState === 2) {
+        this.setState({
+          picture: [reader.result],
+        });
+      }
+    };
+    reader.readAsDataURL(e.target.files[0]);
+  };
+
+  displayImage = () => {
+    if (this.state.picture !== []) {
+      return (
+        <div className="imageholder">
+          <img src={this.state.picture} alt="" />
+        </div>
+      );
+    }
+  };
 
   render() {
 

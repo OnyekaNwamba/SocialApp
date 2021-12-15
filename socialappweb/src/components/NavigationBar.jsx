@@ -96,7 +96,7 @@ export const WithSubnavigation = ({ history }) => {
               <Avatar
                 size="md"
                 name="Dan Abrahmov"
-                src="https://bit.ly/dan-abramov"
+                // src="https://bit.ly/dan-abramov"
                 _hover={{
                   bg: 'pink.300',
                 }}
